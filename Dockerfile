@@ -25,4 +25,4 @@ COPY scripts ./scripts
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/usr/src/app/scripts/entrypoint.sh" ]
+ENTRYPOINT [ "./scripts/entrypoint.sh", "java", "-jar", "app.jar" ]
