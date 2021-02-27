@@ -1,6 +1,6 @@
 # BUILD
 
-FROM maven:3-jdk-11 AS build
+FROM maven:3-jdk-11-slim AS build
 
 WORKDIR /usr/src/app
 
@@ -13,7 +13,7 @@ RUN mvn package -Dmaven.test.skip=true
 
 # RUN
 
-FROM openjdk:11-jre
+FROM openjdk:11-jre-slim
 
 WORKDIR /usr/src/app
 
