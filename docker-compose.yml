@@ -1,26 +1,36 @@
 services:
 
-    backend:
-      image: hr-sber-backend:latest
-      build:
-        context: .
-      ports:
-        - 8080:8080
-      env_file:
-        - .env
-      environment:
-        SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
-        SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
-        SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
-        SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      depends_on:
-        - db
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+    
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    depends_on:
+      - zookeeper
 
-    db:
-      image: postgres:alpine
-      ports:
-        - 5432:5432
-      environment:
-        POSTGRES_DB: ${DB_NAME}
-        POSTGRES_USER: ${DB_USERNAME}
-        POSTGRES_PASSWORD: ${DB_PASSWORD}
+  db:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+  backend:
+    image: hr-sber-backend:latest
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    depends_on:
+      - db
