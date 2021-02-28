@@ -31,6 +31,10 @@ public class UserEntity {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private RoleEntity roleEntity;
+
 //    @OneToMany(mappedBy = "author")
 //    private Set<PostEntity> posts;
     
