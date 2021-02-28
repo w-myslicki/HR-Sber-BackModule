@@ -5,27 +5,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @Data
 @Entity
-@Table(name = "tags")
+@Table(name = "tags", schema = "public")
 public class TagEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name = "tag_name")
-    private String tagName;
+    @Column(name = "name")
+    private String name;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "posts_tags",
-        joinColumns = @JoinColumn(name = "tag_id") ,
-        inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private List<PostEntity> postEntities;
+//    @ManyToMany(mappedBy = "tags")
+//    private Set<PostEntity> posts;
 }

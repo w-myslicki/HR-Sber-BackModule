@@ -17,11 +17,11 @@ FROM openjdk:11-jre-slim
 
 WORKDIR /usr/src/app
 
-ARG JAR_FILE=target/*.jar
-COPY --from=build /usr/src/app/${JAR_FILE} app.jar
-
 RUN apt-get update && apt-get install -y netcat
 COPY scripts ./scripts
+
+ARG JAR_FILE=target/*.jar
+COPY --from=build /usr/src/app/${JAR_FILE} app.jar
 
 EXPOSE 8080
 

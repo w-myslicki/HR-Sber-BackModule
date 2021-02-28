@@ -7,34 +7,33 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "public")
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private int id;
 
     @Column(name = "username")
-    private String userName;
+    private String username;
 
-    @Column(name = "password_hash")
+    @Column(name = "password")
     private String password;
 
     @CreatedDate
-    @Column(name = "date_created")
-    private Date dateCreated;
+    @Column(name = "created_at")
+    private Date createdAt;
 
-    @OneToMany(mappedBy = "userEntity") 
-    private List<PostEntity> postEntities;
+//    @OneToMany(mappedBy = "author")
+//    private Set<PostEntity> posts;
     
-    @ManyToMany(mappedBy = "userLikes")
-    private Set<PostEntity> likedPosts;
+//    @ManyToMany(mappedBy = "likedUsers")
+//    private Set<PostEntity> likedPosts;
 }

@@ -13,35 +13,34 @@ import java.util.Set;
 @Setter
 @Data
 @Entity
-@Table(name = "posts")
+@Table(name = "posts", schema = "public")
 public class PostEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "id")
     private int id;
-
-    @Column(name = "title")
-    private String title;
 
     @Column(name = "content")
     private String content;
 
     @CreatedDate
-    @Column(name = "date_created")
-    private Date dateCreated;
+    @Column(name = "created_at")
+    private Date createdAt;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private UserEntity userEntity;
+//    @ManyToOne
+//    @JoinColumn(name="author_id")
+//    private UserEntity author;
 
-    @ManyToMany(mappedBy = "postEntities")
-    private Set<TagEntity> tagEntities;
+//    @ManyToMany
+//    @JoinTable(name = "posts_tags",
+//               joinColumns = @JoinColumn(name = "tag_id"),
+//               inverseJoinColumns = @JoinColumn(name = "post_id"))
+//    private Set<TagEntity> tags;
 
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "posts_likes",
-        joinColumns = @JoinColumn(name = "post_id") ,
-        inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<UserEntity> userLikes;
+//    @ManyToMany
+//    @JoinTable(name = "posts_likes",
+//               joinColumns = @JoinColumn(name = "post_id"),
+//               inverseJoinColumns = @JoinColumn(name = "user_id"))
+//    private Set<UserEntity> likedUsers;
 }

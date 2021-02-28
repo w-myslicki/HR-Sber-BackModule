@@ -4,7 +4,7 @@ services:
     image: wurstmeister/zookeeper
     ports:
       - 2181:2181
-    
+
   kafka:
     image: wurstmeister/kafka
     ports:
@@ -23,6 +23,8 @@ services:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postresql/data/
 
   backend:
     image: hr-sber-backend:latest
@@ -35,3 +37,6 @@ services:
     depends_on:
       - db
       - kafka
+
+volumes:
+  postgres_data:
