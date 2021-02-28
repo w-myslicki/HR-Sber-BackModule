@@ -32,10 +32,13 @@ public class UserEntity {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({ "author", "likedUsers" })
-    private Set<PostEntity> posts;
-    
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private RoleEntity roleEntity;
+
+//    @OneToMany(mappedBy = "author")
+//    private Set<PostEntity> posts;
+
     @ManyToMany(mappedBy = "likedUsers", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({ "author", "likedUsers" })
     private Set<PostEntity> likedPosts;
