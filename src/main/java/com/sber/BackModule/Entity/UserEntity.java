@@ -1,5 +1,6 @@
 package com.sber.BackModule.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,9 +32,11 @@ public class UserEntity {
     @Column(name = "created_at")
     private Date createdAt;
 
-//    @OneToMany(mappedBy = "author")
-//    private Set<PostEntity> posts;
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({ "author", "likedUsers" })
+    private Set<PostEntity> posts;
     
-//    @ManyToMany(mappedBy = "likedUsers")
-//    private Set<PostEntity> likedPosts;
+    @ManyToMany(mappedBy = "likedUsers", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({ "author", "likedUsers" })
+    private Set<PostEntity> likedPosts;
 }

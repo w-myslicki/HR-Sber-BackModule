@@ -1,5 +1,6 @@
 package com.sber.BackModule.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,6 @@ public class TagEntity {
     @Column(name = "name")
     private String name;
 
-//    @ManyToMany(mappedBy = "tags")
-//    private Set<PostEntity> posts;
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
+    private Set<PostEntity> posts;
 }

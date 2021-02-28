@@ -1,5 +1,7 @@
 package com.sber.BackModule.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,19 +30,22 @@ public class PostEntity {
     @Column(name = "created_at")
     private Date createdAt;
 
-//    @ManyToOne
-//    @JoinColumn(name="author_id")
-//    private UserEntity author;
+    @ManyToOne
+    @JoinColumn(name="author_id")
+    @JsonIgnoreProperties({ "posts", "likedPosts" })
+    private UserEntity author;
 
-//    @ManyToMany
-//    @JoinTable(name = "posts_tags",
-//               joinColumns = @JoinColumn(name = "tag_id"),
-//               inverseJoinColumns = @JoinColumn(name = "post_id"))
-//    private Set<TagEntity> tags;
+    @ManyToMany
+    @JoinTable(name = "posts_tags",
+               joinColumns = @JoinColumn(name = "tag_id"),
+               inverseJoinColumns = @JoinColumn(name = "post_id"))
+    @JsonIgnore
+    private Set<TagEntity> tags;
 
-//    @ManyToMany
-//    @JoinTable(name = "posts_likes",
-//               joinColumns = @JoinColumn(name = "post_id"),
-//               inverseJoinColumns = @JoinColumn(name = "user_id"))
-//    private Set<UserEntity> likedUsers;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "posts_likes",
+               joinColumns = @JoinColumn(name = "post_id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JsonIgnore
+    private Set<UserEntity> likedUsers;
 }
