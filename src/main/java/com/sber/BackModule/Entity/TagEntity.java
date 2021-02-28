@@ -1,5 +1,6 @@
 package com.sber.BackModule.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
@@ -10,7 +11,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Data
 @Entity
 @Table(name = "tags", schema = "public")
 public class TagEntity {

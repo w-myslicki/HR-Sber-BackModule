@@ -1,10 +1,10 @@
 package com.sber.BackModule.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
+import lombok.Getter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Data
 @Entity
 @Table(name = "posts", schema = "public")
 public class PostEntity {
@@ -30,22 +29,22 @@ public class PostEntity {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="author_id")
     @JsonIgnoreProperties({ "posts", "likedPosts" })
     private UserEntity author;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "posts_tags",
                joinColumns = @JoinColumn(name = "tag_id"),
                inverseJoinColumns = @JoinColumn(name = "post_id"))
-    @JsonIgnore
+    @JsonIgnoreProperties({ "posts" })
     private Set<TagEntity> tags;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "posts_likes",
                joinColumns = @JoinColumn(name = "post_id"),
                inverseJoinColumns = @JoinColumn(name = "user_id"))
-    @JsonIgnore
+    @JsonIgnoreProperties({ "posts", "likedPosts" })
     private Set<UserEntity> likedUsers;
 }

@@ -1,5 +1,6 @@
 package com.sber.BackModule.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
@@ -12,7 +13,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Data
 @Entity
 @Table(name = "users", schema = "public")
 public class UserEntity {
@@ -26,6 +26,7 @@ public class UserEntity {
     private String username;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @CreatedDate
@@ -36,10 +37,13 @@ public class UserEntity {
     @JoinColumn(name = "role_id")
     private RoleEntity roleEntity;
 
-//    @OneToMany(mappedBy = "author")
-//    private Set<PostEntity> posts;
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({ "author", "likedUsers" })
+    private Set<PostEntity> posts;
 
     @ManyToMany(mappedBy = "likedUsers", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({ "author", "likedUsers" })
     private Set<PostEntity> likedPosts;
+
+
 }

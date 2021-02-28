@@ -1,12 +1,14 @@
 package com.sber.BackModule.Entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role_table")
-@Data
+@Table(name = "roles")
+@Getter
+@Setter
 public class RoleEntity {
 
     @Id
@@ -14,4 +16,5 @@ public class RoleEntity {
     private Integer id;
 
     @Column
+    private String name;
 }
