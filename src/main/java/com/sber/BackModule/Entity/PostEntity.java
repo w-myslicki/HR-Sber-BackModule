@@ -25,7 +25,6 @@ public class PostEntity {
     @Column(name = "content")
     private String content;
 
-    @CreatedDate
     @Column(name = "created_at")
     private Date createdAt;
 

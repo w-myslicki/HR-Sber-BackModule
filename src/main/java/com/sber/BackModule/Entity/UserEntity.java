@@ -29,7 +29,6 @@ public class UserEntity {
     @JsonIgnore
     private String password;
 
-    @CreatedDate
     @Column(name = "created_at")
     private Date createdAt;
 
